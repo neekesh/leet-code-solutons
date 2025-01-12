@@ -25,7 +25,7 @@
 # Space Complexity: O(m)
 class TwoPointerApproach:
 
-    def longestPalindrome(self, s: str) -> str:
+    def longest_pallindrome(self, s: str) -> str:
         def check( i, j):
             left = i
             right = j-1
@@ -51,7 +51,7 @@ class TwoPointerApproach:
 '''
 
 class DynamicProgramming:
-    def longestPalindrome(self, s):
+    def longest_pallindrome(self, s):
         n= len(s)
         dp = [[False] * n for _ in range(n)]
         ans = [0,0]
@@ -68,5 +68,38 @@ class DynamicProgramming:
                     dp[i][j] = True
                     ans = [i,j]
         return s[ans[0]: ans[1]+1]
-dynamicProgramming = DynamicProgramming()
-print(dynamicProgramming.longestPalindrome("babad"))
+# dynamicProgramming = DynamicProgramming()
+# print(dynamicProgramming.longest_pallindrome("babad"))
+
+'''
+Method 3: Expand from centers
+
+'''
+class ExpandFromCenters:
+    def longest_pallindrome(self, s: str):
+        n = len(s)
+        def expand(i, j):
+            left = i
+            right = j
+            while  right < n and left >= 0 and s[left]== s[right]:
+                    left -=1
+                    right +=1
+            return right - left -1
+        ans = [0, 0]
+        for i in range(n):
+            max_len = ans[1]-ans[0]
+            odd_length = expand(i, i)
+            if odd_length  > max_len +1:
+                dist = odd_length //2
+                ans =[i-dist, i+ dist]
+            even_length = expand(i, i+1)
+            if even_length  > max_len+1:
+                
+                dist = (even_length // 2) - 1
+                ans =[i-dist, i+ dist+1]
+            
+        return s[ans[0]: ans[1]+1]  
+    
+pd = ExpandFromCenters()
+print(pd.longest_pallindrome("ababa"))
+                
