@@ -32,8 +32,6 @@ class TwoPointer:
     def three_sun_closest(self, nums, target):
         nums.sort()
         
-        ans, n = nums[0] + nums[1] + nums[2], len(nums)
-        min_diff = float('inf')
         
         # with sorting if the first three are greater than the target
         # then we don;t need to find out the other remaining elements and vice-versa for the 
@@ -43,13 +41,18 @@ class TwoPointer:
         elif sum(nums[-3:]) <= target:
             return sum(nums[-3:])
         
+        ans, n = nums[0] + nums[1] + nums[2], len(nums)
+        min_diff = float('inf')
+        
         for i in range(n):
             left = i+1 
             right = n-1
             
             if i and nums[i] == nums[i - 1]:
                 continue
-            # Directly going to the last element and checking for the last option
+            
+            # Directly going to the last element and checking for the last and second last option
+            # since arranged as the last two are the greatest 
             add = nums[i] + nums[right] + nums[right-1]
             if add < target:
                 if target -add < ans:
