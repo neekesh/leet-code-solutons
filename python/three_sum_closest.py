@@ -31,28 +31,56 @@ Constraints:
 class TwoPointer:
     def three_sun_closest(self, nums, target):
         nums.sort()
-        ans =  float('inf')
-        n = len(nums) -1
+        
+        ans, n = nums[0] + nums[1] + nums[2], len(nums)
+        min_diff = float('inf')
+        
+        # with sorting if the first three are greater than the target
+        # then we don;t need to find out the other remaining elements and vice-versa for the 
+        # last three
+        if sum(nums[:3]) >= target:
+            return sum(nums[:3])
+        elif sum(nums[-3:]) <= target:
+            return sum(nums[-3:])
+        
         for i in range(n):
-            left = i+1
-            right = n
+            left = i+1 
+            right = n-1
+            
+            if i and nums[i] == nums[i - 1]:
+                continue
+            # Directly going to the last element and checking for the last option
+            add = nums[i] + nums[right] + nums[right-1]
+            if add < target:
+                if target -add < ans:
+                    min_diff = target - add
+                    ans = add
+                continue
+                    
             
             while left < right:
-                sum = nums[i] + nums[left] + nums[right]
-                current = sum -target
-                if abs(target - sum) < abs(target - ans):
-                    ans = sum
-                if current == 0:
+                add = nums[i] + nums[left] + nums[right]
+                min_diff = add -target
+                if abs(target - add) < abs(target - ans):
+                    ans = add
+                if min_diff == 0:
                     return target
-                elif sum < target:
+                elif add < target:
+                    if add -target < min_diff:
+                        min_diff = add-target
+                        ans = add
                     left +=1
-                elif sum  > target :
+                elif add  > target :
+                    if add -target < min_diff:
+                        min_diff = add-target
+                        ans = add
                     right -=1
 
                 
         return ans
 
 sol = TwoPointer()
-print(sol.three_sun_closest([0,0,0], 1))
-print(sol.three_sun_closest( [-1,2,1,-4], 1))
+# print(sol.three_sun_closest([0,0,0], 1))
+# print(sol.three_sun_closest( [-1,2,1,-4], 1))
+print(sol.three_sun_closest( [-4,2,2,3,3,3], 0))
 # print(sol.three_sun_closest([0,0,0], 1))
