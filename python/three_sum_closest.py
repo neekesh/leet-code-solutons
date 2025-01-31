@@ -28,4 +28,31 @@ Constraints:
 
 
 '''
+class TwoPointer:
+    def three_sun_closest(self, nums, target):
+        nums.sort()
+        ans =  float('inf')
+        n = len(nums) -1
+        for i in range(n):
+            left = i+1
+            right = n
+            
+            while left < right:
+                sum = nums[i] + nums[left] + nums[right]
+                current = sum -target
+                if abs(target - sum) < abs(target - ans):
+                    ans = sum
+                if current == 0:
+                    return target
+                elif sum < target:
+                    left +=1
+                elif sum  > target :
+                    right -=1
 
+                
+        return ans
+
+sol = TwoPointer()
+print(sol.three_sun_closest([0,0,0], 1))
+print(sol.three_sun_closest( [-1,2,1,-4], 1))
+# print(sol.three_sun_closest([0,0,0], 1))
