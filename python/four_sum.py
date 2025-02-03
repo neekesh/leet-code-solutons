@@ -26,3 +26,58 @@ Constraints:
 -109 <= target <= 109
 '''
 
+class TwoPointer:
+    def four_sum(self, nums, target):
+        
+        if not nums:
+            return []
+        nums.sort()
+        ans = []
+        unique = set()
+        n = len(nums)
+        if n <= 4:
+            if sum(nums) == target:
+                return [nums]
+            return []
+        for i in range(n-3):
+            if i>0 and nums[i]==nums[i-1]:
+                continue
+            
+            for j in range(i+1, n-2):
+                if j > i+1 and nums[j] == nums[j-1]:
+                    continue
+                
+                left =j+1
+                right = n-1
+               
+                while left < right:
+                    add = nums[i] + nums[j] + nums[left] + nums[right]
+                    
+                    if add == target:
+                        quad = (nums[i], nums[j], nums[left], nums[right])
+                        if quad not in unique:
+                            unique.add(quad)
+                            ans.append(list(quad))
+
+                        while left < right and nums[left] == nums[left +1]:
+                            left +=1
+                        while left < right and nums[right] == nums[right -1]:
+                            right -=1
+                        left +=1
+                        right -= 1
+                    elif add < target:
+                        left +=1
+                    elif add > target:
+                        right -=1
+        return ans
+    
+    
+sol = TwoPointer()
+# print(sol.four_sum([2,2,2,2,2], 8))
+# print(sol.four_sum([1,0,-1,0,-2,2], 0))
+print(sol.four_sum([-2,-1,-1,1,1,2,2], 0))
+print(sol.four_sum([-1,0,1,2,-1,-4], -1))
+                        
+                        
+                    
+                

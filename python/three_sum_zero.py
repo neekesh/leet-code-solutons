@@ -33,12 +33,13 @@ Constraints:
 3 <= nums.length <= 3000
 -105 <= nums[i] <= 105
 '''
+from typing import List
+
+
 class TwoPointer:
     def three_sum(self, nums):
         ans = []
         nums.sort()
-
-
                 
 
         for i in range(len(nums)-1):
