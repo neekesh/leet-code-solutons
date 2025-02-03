@@ -136,7 +136,7 @@ class HashSet:
                 return res
 
             if k == 2:
-                return twoSum(nums, target)
+                return tow_sum(nums, target)
 
             for i in range(len(nums)):
                 if i == 0 or nums[i - 1] != nums[i]:
@@ -145,7 +145,7 @@ class HashSet:
 
             return res
 
-        def twoSum(nums: List[int], target: int) -> List[List[int]]:
+        def tow_sum(nums: List[int], target: int) -> List[List[int]]:
             res = []
             # purpose of set is to find the complement of the target
             s = set()
